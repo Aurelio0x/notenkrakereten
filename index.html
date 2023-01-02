@@ -1,0 +1,91 @@
+<html>
+  <head>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <table id="week">
+      <tr>
+        <th>Dag</th>
+        <th>Coco</th>
+        <th>Mek</th>
+        <th>Walliey</th>
+        <th>Kesh</th>
+      </tr>
+    </table>
+    <script>
+      // Get the current day of the week
+      const today = new Date().getDay();
+      const days = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
+      
+      // Create a new row for each day of the week
+      for (let i = 0; i < 7; i++) {
+        const row = document.createElement('tr');
+        
+        // Create a cell for the day of the week
+        const dayCell = document.createElement('td');
+        dayCell.innerHTML = days[i];
+        row.appendChild(dayCell);
+        
+        // Create a cell with a checkbox for each roommate
+        for (let j = 0; j < 4; j++) {
+          const checkboxCell = document.createElement('td');
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkboxCell.appendChild(checkbox);
+          row.appendChild(checkboxCell);
+        }
+        
+        // Add the row to the table
+        document.getElementById('week').appendChild(row);
+      }
+      
+      // Highlight the current day of the week
+      document.getElementsByTagName('tr')[today + 1].style.backgroundColor = 'lightgray';
+      
+      // Save the state of the checkboxes in local storage
+      const saveState = function() {
+        for (let i = 0; i < 7; i++) {
+          for (let j = 0; j < 4; j++) {
+            const checkbox = document.getElementsByTagName('tr')[i + 1].getElementsByTagName('input')[j];
+            localStorage.setItem(`checkbox-${i}-${j}`, checkbox.checked);
+          }
+        }
+      }
+      // Load the saved state of the checkboxes
+      const loadState = function() {
+        for (let i = 0; i < 7; i++) {
+          for (let j = 0; j < 4; j++) {
+            const checkbox = document.getElementsByTagName('tr')[i + 1].getElementsByTagName('input')[j];
+            checkbox.checked = localStorage.getItem(`checkbox-${i}-${j}`) === 'true';
+          }
+        }
+      }
+      loadState();
+      
+      // Save the state of the checkboxes when they are clicked
+for (let i = 0; i < 7; i++) {
+  for (let j = 0; j < 4; j++) {
+    const checkbox = document.getElementsByTagName('tr')[i + 1].getElementsByTagName('input')[j];
+    checkbox.addEventListener('click', saveState);
+  }
+}
+
+// Refresh the table when the week changes
+const refreshTable = function() {
+  const currentDate = new Date().getDate();
+  if (currentDate < today) {
+    window.location.reload();
+  }
+}
+setInterval(refreshTable, 1000);
+</script>
+</body>
+</html>
