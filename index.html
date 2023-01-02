@@ -1,4 +1,5 @@
 <html>
+<link rel="stylesheet" href="style.css">
   <head>
     <style>
       table, th, td {
@@ -10,7 +11,9 @@
       }
     </style>
   </head>
+  <title>Eetschema</title>
   <body>
+    <header><Center>Op welke dag eet je thuus?</Center></header>
     <table id="week">
       <tr>
         <th>Dag</th>
@@ -48,7 +51,7 @@
       }
       
       // Highlight the current day of the week
-      document.getElementsByTagName('tr')[today + 1].style.backgroundColor = 'lightgray';
+      document.getElementsByTagName('tr')[today + 1].style.backgroundColor = 'black';
       
       // Save the state of the checkboxes in local storage
       const saveState = function() {
